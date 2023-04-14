@@ -2,15 +2,14 @@ FROM golang
 
 WORKDIR /src
 
-COPY go.mod .
-COPY go.sum .
+COPY go.mod ./
 RUN go mod download
 
-COPY . .
-RUN make build
+COPY *.go ./
 
-FROM scratch
+RUN go build -o /golang-boilerplate
 
-EXPOSE 8080/tcp
-ENV GIN_MODE=release
+EXPOSE 8080
+
+CMD [ "/golang-boilerplate" ]
 ENTRYPOINT ["/"]
