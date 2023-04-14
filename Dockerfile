@@ -1,15 +1,13 @@
-FROM golang
 
 WORKDIR /src
 
-COPY go.mod .
-COPY go.sum .
+COPY go.mod ./
 RUN go mod download
 
-COPY . .
-RUN make build
+COPY *.go ./
 
-FROM scratch
+RUN go build -o /go-docker-demo
 
-EXPOSE 8080/tcp
-ENTRYPOINT ["/golang-demo"]
+EXPOSE 8080
+
+CMD [ "/go-docker-demo" ]
